@@ -6,20 +6,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#009800"
+    android:background="#009800"    >
     tools:context=".BidActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <TableLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:fillViewport="true" >
+
+        <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:shrinkColumns="*"
+        android:stretchColumns="*">
 
         <TableRow
             android:layout_width="fill_parent"
@@ -51,7 +58,7 @@
                 android:text="@string/declarer_west"
                 android:textSize="16sp"
                 android:id="@+id/textView3"
-                android:padding="20dip"
+
                 android:gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +66,7 @@
                 android:text="@string/declarer_north"
                 android:textSize="16sp"
                 android:id="@+id/textView4"
-                android:padding="20dip"
+
                 android:gravity="center" />
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +74,7 @@
                 android:text="@string/declarer_east"
                 android:textSize="16sp"
                 android:id="@+id/textView5"
-                android:padding="20dip"
+
                 android:gravity="center" />
             <TextView
                 android:layout_width="wrap_content"
@@ -75,15 +82,146 @@
                 android:text="@string/declarer_south"
                 android:textSize="16sp"
                 android:id="@+id/textView6"
-                android:padding="20dip"
+
                 android:gravity="center"/>
             </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
+            android:layout_height="fill_parent"
+            android:layout_gravity="fill_vertical"
+            ></TableRow>
 
+        </TableLayout>
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:layout_alignParentBottom="true">
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-    </TableLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1C"
+                android:textSize="16sp"
+                android:id="@+id/textView7"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1D"
+                android:textSize="16sp"
+                android:id="@+id/textView8"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1H"
+                android:textSize="16sp"
+                android:id="@+id/textView9"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1S"
+                android:textSize="16sp"
+                android:id="@+id/textView10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1NT"
+                android:textSize="16sp"
+                android:id="@+id/textView11"
+                />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2C"
+                    android:textSize="16sp"
+                    android:id="@+id/textView12"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2D"
+                    android:textSize="16sp"
+                    android:id="@+id/textView13"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2H"
+                    android:textSize="16sp"
+                    android:id="@+id/textView14"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2S"
+                    android:textSize="16sp"
+                    android:id="@+id/textView15"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2NT"
+                    android:textSize="16sp"
+                    android:id="@+id/textView16"
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3C"
+                    android:textSize="16sp"
+                    android:id="@+id/textView17"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3D"
+                    android:textSize="16sp"
+                    android:id="@+id/textView18"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3H"
+                    android:textSize="16sp"
+                    android:id="@+id/textView19"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3S"
+                    android:textSize="16sp"
+                    android:id="@+id/textView20"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3NT"
+                    android:textSize="16sp"
+                    android:id="@+id/textView21"
+                    />
+            </TableRow>
+            </TableLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
