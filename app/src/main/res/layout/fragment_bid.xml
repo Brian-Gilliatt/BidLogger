@@ -28,15 +28,56 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Board"
-                android:textSize="20dp"
+                android:text="@string/bidding_board"
+                android:textSize="20sp"
                 android:id="@+id/textView"
-                android:layout_column="7" />
+                android:layout_column="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bidding_declarer"
+                android:textSize="20sp"
+                android:id="@+id/textView2"
+                android:layout_column="3"/>
         </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"></TableRow>
+            android:layout_height="fill_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/declarer_west"
+                android:textSize="20sp"
+                android:id="@+id/textView3"
+                android:padding="20dip"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/declarer_north"
+                android:textSize="20sp"
+                android:id="@+id/textView4"
+                android:padding="20dip"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/declarer_east"
+                android:textSize="20sp"
+                android:id="@+id/textView5"
+                android:padding="20dip"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/declarer_south"
+                android:textSize="20sp"
+                android:id="@+id/textView6"
+                android:padding="20dip"
+                android:gravity="center"/>
+            </TableRow>
 
         <TableRow
             android:layout_width="fill_parent"

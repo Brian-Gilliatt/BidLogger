@@ -7,5 +7,10 @@
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="declarer_north">North</string>
+    <string name="declarer_south">South</string>
+    <string name="declarer_east">East</string>
+    <string name="declarer_west">West</string>
+    <string name="bidding_board">Board</string>
+    <string name="bidding_declarer">Declarer</string>
 </resources>
