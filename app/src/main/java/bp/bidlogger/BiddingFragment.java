@@ -1,6 +1,7 @@
 package bp.bidlogger;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class BiddingFragment extends Fragment {
     private static Spinner _spinner;
     private ArrayList<Bid> _bidList;
     private  View _rootView;
+    private int _passCount = 0;
 
     /**
      * The fragment argument representing the section number for this
@@ -112,11 +114,12 @@ public class BiddingFragment extends Fragment {
 
 
     public boolean AddBid(Bid bid){
+
         int result = -1;
 
         int size = _bidList.size();
 
-        if (size == 0){
+        if ((size == 0) || (bid.Suit() == "Pass") ){
             result = 1;
         }
         else {
@@ -129,9 +132,53 @@ public class BiddingFragment extends Fragment {
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) gridView.getAdapter();
             adapter.add("  "+bid.TheBid());
             adapter.notifyDataSetChanged();
+
+            if (bid.Suit() == "Pass")
+                {_passCount++;}
+                else {_passCount = 0;}
+
+
+            if (_passCount == 3){
+                View view = this.getView();
+                Context context = view.getContext();
+                Context appContext = context.getApplicationContext();
+                CharSequence text = "Bidding complete";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+
             return true;
         }
         return false;
+    }
+
+    public void RemoveLastBid() {
+        int size = _bidList.size();
+        if (size == 0) return;
+        GridView gridView = (GridView) _rootView.findViewById(R.id.gridView);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) gridView.getAdapter();
+        int count = adapter.getCount();
+        String bid = adapter.getItem(count-1);
+        if (bid == "") return;
+        _bidList.remove(size-1);
+        adapter.remove(bid);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void RemoveAllBids() {
+        int size = _bidList.size();
+        if (size == 0) return;
+        _bidList.clear();
+        GridView gridView = (GridView) _rootView.findViewById(R.id.gridView);
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) gridView.getAdapter();
+        adapter.clear();
+
+        Spinner declarer_spinner = (Spinner) _rootView.findViewById(R.id.declarer_spinner);
+        String declarer = (String)declarer_spinner.getSelectedItem();
+        SetDeclarerPosition(declarer);
+        adapter.notifyDataSetChanged();
     }
 
     public void SetDeclarerPosition(String declarer){
@@ -169,9 +216,9 @@ public class BiddingFragment extends Fragment {
 
         public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 
-            Toast.makeText(parent.getContext(),
-                    "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_SHORT).show();
+ //           Toast.makeText(parent.getContext(),
+ //                   "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+ //                   Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -188,9 +235,9 @@ public class BiddingFragment extends Fragment {
 
             SetDeclarerPosition(parent.getItemAtPosition(pos).toString());
 
-            Toast.makeText(parent.getContext(),
-                    "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_SHORT).show();
+ //           Toast.makeText(parent.getContext(),
+ //                   "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+ //                   Toast.LENGTH_SHORT).show();
         }
 
         @Override

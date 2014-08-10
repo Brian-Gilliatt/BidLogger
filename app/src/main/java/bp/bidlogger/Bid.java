@@ -21,7 +21,8 @@ public class Bid implements Comparator<Bid> {
 
     public String TheBid ()
     {
-        return _suit + _bidValue;
+        if (_suit == "Pass" ) return _suit;
+        else return _bidValue + _suit;
     }
 
     public int Value ()
@@ -53,13 +54,22 @@ public class Bid implements Comparator<Bid> {
         if (b1.Suit() == "♥") {
             if (b2.Suit() == "♥") return 0;
             else {
-                if (b2.Suit() == "♠")return -1;
+                if ((b2.Suit() == "♠") || (b2.Suit() == "NT")) return -1;
             }
             return 1;
         }
 
         if (b1.Suit() == "♠") {
             if (b2.Suit() == "♠") return 0;
+            else{
+                if (b2.Suit() == "NT") return -1;
+            }
+            return 1;
+        }
+
+        if (b1.Suit() == "NT") {
+            if (b2.Suit() == "NT") return 0;
+
         }
         return 1;
     }

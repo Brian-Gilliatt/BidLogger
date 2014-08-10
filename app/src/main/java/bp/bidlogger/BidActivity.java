@@ -197,7 +197,7 @@ public class BidActivity extends Activity {
 
     public void ClickedButtonClubs(View view) {
         Bid bid = new Bid(_bidValue,"♣");
-        if (!_biddingFragment.AddBid(bid)) {
+        if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
             CharSequence text = "Invalid bid!";
@@ -210,7 +210,7 @@ public class BidActivity extends Activity {
 
     public void ClickedButtonDiamonds(View view) {
         Bid bid = new Bid(_bidValue, "♦");
-        if (!_biddingFragment.AddBid(bid)) {
+        if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
             CharSequence text = "Invalid bid!";
@@ -223,7 +223,7 @@ public class BidActivity extends Activity {
 
     public void ClickedButtonHearts(View view) {
         Bid bid = new Bid(_bidValue, "♥");
-        if (!_biddingFragment.AddBid(bid)) {
+        if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
             CharSequence text = "Invalid bid!";
@@ -236,6 +236,57 @@ public class BidActivity extends Activity {
 
     public void ClickedButtonSpades(View view) {
         Bid bid = new Bid(_bidValue, "♠");
+        if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
+
+    public void ClickedButtonNT(View view) {
+        Bid bid = new Bid(_bidValue, "NT");
+        if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
+
+
+    public void ClickedButtonBack(View view) {
+        _biddingFragment.RemoveLastBid();
+/*            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+*/
+    }
+
+    public void ClickedButtonBackAll(View view) {
+        _biddingFragment.RemoveAllBids();
+/*            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+*/
+    }
+
+    public void ClickedButtonPass(View view) {
+        Bid bid = new Bid(0, "Pass");
         if (!_biddingFragment.AddBid(bid)) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -247,6 +298,8 @@ public class BidActivity extends Activity {
         }
     }
 }
+
+
 
 
 

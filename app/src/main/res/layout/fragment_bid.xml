@@ -301,6 +301,17 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="42sp"
                     android:layout_height="42sp"
+                    android:textSize="12sp"
+                    android:text="NT"
+                    android:id="@+id/button21"
+                    android:layout_column="4"
+                    android:onClick="ClickedButtonNT"
+                    android:clickable="true" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="42sp"
+                    android:layout_height="42sp"
                     android:text="D"
                     android:id="@+id/button13"
                     android:layout_column="5" />
@@ -326,7 +337,9 @@
                     android:text="Pass"
                     android:id="@+id/button15"
                     android:layout_column="1"
-                    android:layout_span="2" />
+                    android:layout_span="2"
+                    android:onClick="ClickedButtonPass"
+                    android:clickable="true" /> />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -334,7 +347,9 @@
                     android:layout_height="42sp"
                     android:text="&#60;"
                     android:id="@+id/button17"
-                    android:layout_column="4" />
+                    android:layout_column="4"
+                    android:onClick="ClickedButtonBack"
+                    android:clickable="true" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -342,7 +357,9 @@
                     android:layout_height="42sp"
                     android:text="|&#60;"
                     android:id="@+id/button18"
-                    android:layout_column="5" />
+                    android:layout_column="5"
+                    android:onClick="ClickedButtonBackAll"
+                    android:clickable="true" />
             </TableRow>
 
             <TableRow
