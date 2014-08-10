@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.*;
+import java.util.*;
 
 
 public class BidActivity extends Activity {
@@ -26,6 +29,8 @@ public class BidActivity extends Activity {
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
+    private int _bidValue = 0;
+    private BiddingFragment _biddingFragment;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -38,15 +43,20 @@ public class BidActivity extends Activity {
         setContentView(R.layout.activity_bid);
 
 
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
-
+        BiddingFragment.SetBidActivity(this);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+    }
 
+    // Add spinner data
+
+    public void addListenerOnSpinnerItemSelection() {
+
+        //     spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
 
@@ -69,13 +79,13 @@ public class BidActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+//        private BidActivity _bidActivity;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -87,12 +97,13 @@ public class BidActivity extends Activity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 1) {
                 return HistoryFragment.newInstance(position + 1);
-            }
-            else
-            {
-                return BiddingFragment.newInstance(position + 1);
+            } else {
+                _biddingFragment = BiddingFragment.newInstance(position + 1);
+     //           BiddingFragment.LoadSpinner();
+                return _biddingFragment;
             }
         }
+
 
         @Override
         public int getCount() {
@@ -108,74 +119,136 @@ public class BidActivity extends Activity {
                     return "History".toUpperCase(l);
                 case 1:
                     return "Bidding".toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+//                case 2:
+//                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class BiddingFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    public void ClickedButton1(View view) {
+        _bidValue = 1;
+        Context context =  this.getApplicationContext();
+        CharSequence text = "Button 1 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static BiddingFragment newInstance(int sectionNumber) {
-            BiddingFragment fragment = new BiddingFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
+    public void ClickedButton2(View view) {
+        _bidValue = 2;
+        Context context =  this.getApplicationContext();
+        CharSequence text = "Button 2 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
 
-        public BiddingFragment() {
-        }
+    public void ClickedButton3(View view) {
+        _bidValue = 3;
+        Context context =  this.getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Button 3 clicked!";
+        int duration = Toast.LENGTH_SHORT;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_bid, container, false);
-            return rootView;
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
+    public void ClickedButton4(View view) {
+        _bidValue = 4;
+        Context context =  this.getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Button 4 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
+    public void ClickedButton5(View view) {
+        _bidValue = 5;
+        Context context =  this.getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Button 5 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
+    public void ClickedButton6(View view) {
+        _bidValue = 6;
+        Context context =  this.getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Button 6 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+    }
+    public void ClickedButton7(View view) {
+        _bidValue = 7;
+        Context context =  this.getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Button 7 clicked!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public void ClickedButtonClubs(View view) {
+        Bid bid = new Bid(_bidValue,"♣");
+        if (!_biddingFragment.AddBid(bid)) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
     }
 
-    public static class HistoryFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    public void ClickedButtonDiamonds(View view) {
+        Bid bid = new Bid(_bidValue, "♦");
+        if (!_biddingFragment.AddBid(bid)) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static HistoryFragment newInstance(int sectionNumber) {
-            HistoryFragment fragment = new HistoryFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public HistoryFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-            return rootView;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
     }
 
+    public void ClickedButtonHearts(View view) {
+        Bid bid = new Bid(_bidValue, "♥");
+        if (!_biddingFragment.AddBid(bid)) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
+
+    public void ClickedButtonSpades(View view) {
+        Bid bid = new Bid(_bidValue, "♠");
+        if (!_biddingFragment.AddBid(bid)) {
+            Context context = this.getApplicationContext();
+            Context appContext = context.getApplicationContext();
+            CharSequence text = "Invalid bid!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
 }
+
+
+
+
+
