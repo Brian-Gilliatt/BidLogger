@@ -9,20 +9,27 @@ public class Bid implements Comparator<Bid> {
 
     private int _bidValue;
     private String _suit;
+    private String _by;
 
     public enum Player {
         NORTH, EAST, SOUTH, WEST
     }
 
-    Bid(int bidValue, String suit) {
+    Bid(int bidValue, String suit, String by) {
         _bidValue =  bidValue;
         _suit = suit;
+        _by = by;
     }
 
     public String TheBid ()
     {
         if (_suit == "Pass" ) return _suit;
         else return _bidValue + _suit;
+    }
+
+    public String By ()
+    {
+        return _by;
     }
 
     public int Value ()

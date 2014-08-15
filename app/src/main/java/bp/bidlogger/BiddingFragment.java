@@ -20,10 +20,11 @@ import java.util.*;
 public class BiddingFragment extends Fragment {
 
     private static BidActivity _bidActivity;
-    private static Spinner _spinner;
+   private static Spinner _spinner;
     private ArrayList<Bid> _bidList;
     private  View _rootView;
     private int _passCount = 0;
+    private String _bidder;
 
     /**
      * The fragment argument representing the section number for this
@@ -147,6 +148,8 @@ public class BiddingFragment extends Fragment {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+                _bidActivity.OutputBids(_bidList);
             }
 
             return true;
@@ -165,6 +168,25 @@ public class BiddingFragment extends Fragment {
         _bidList.remove(size-1);
         adapter.remove(bid);
         adapter.notifyDataSetChanged();
+
+        if (_bidder == "N")  {
+            _bidder = "W";
+        }
+        else {
+            if (_bidder == "E"){
+                _bidder = "N";
+            }
+            else {
+                if (_bidder == "S"){
+                    _bidder = "E";
+                }
+                else{
+                    if (_bidder == "W"){
+                        _bidder = "S";
+                    }
+                }
+            }
+        }
     }
 
     public void RemoveAllBids() {
@@ -182,6 +204,7 @@ public class BiddingFragment extends Fragment {
     }
 
     public void SetDeclarerPosition(String declarer){
+        _bidder = declarer;
         GridView gridView = (GridView)_rootView.findViewById(R.id.gridView);
         int startPosition = 0;
         if (declarer == "North")
@@ -211,6 +234,33 @@ public class BiddingFragment extends Fragment {
         }
         bidsAdapter.notifyDataSetChanged();
     }
+
+    public String GetBidder() {
+        return _bidder;
+    }
+
+    public void UpdateBidder(){
+
+        if (_bidder == "N")  {
+            _bidder = "E";
+        }
+        else {
+            if (_bidder == "E"){
+                _bidder = "S";
+            }
+            else {
+                if (_bidder == "S"){
+                    _bidder = "W";
+                }
+                else{
+                    if (_bidder == "W"){
+                        _bidder = "N";
+                    }
+                }
+            }
+        }
+    }
+
 
     public class BoardsOnItemSelectedListener implements OnItemSelectedListener {
 

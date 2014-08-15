@@ -1,10 +1,18 @@
 package bp.bidlogger;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.*;
+import android.widget.AdapterView.*;
+
+import java.io.*;
+import java.nio.*;
+
 
 
 /**
@@ -18,6 +26,7 @@ public class HistoryFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static BidActivity _bidActivity;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -38,6 +47,20 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
+
+
+        String[] files = _bidActivity.GetMyFiles();
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(_bidActivity,
+                android.R.layout.simple_list_item_1, files);
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+
         return rootView;
+    }
+
+    public static void SetBidActivity(BidActivity ba) {
+        _bidActivity = ba;
     }
 }

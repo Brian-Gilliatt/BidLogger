@@ -15,7 +15,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import java.util.*;
+import java.util.Date;
+import java.io.*;
+import java.nio.*;
+
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 
 
 public class BidActivity extends Activity {
@@ -47,6 +68,7 @@ public class BidActivity extends Activity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
         BiddingFragment.SetBidActivity(this);
+        HistoryFragment.SetBidActivity(this);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -134,7 +156,6 @@ public class BidActivity extends Activity {
         Toast toast = Toast.makeText(context, text, duration);
 //        toast.show();
     }
-
     public void ClickedButton2(View view) {
         _bidValue = 2;
         Context context =  this.getApplicationContext();
@@ -143,7 +164,6 @@ public class BidActivity extends Activity {
         Toast toast = Toast.makeText(context, text, duration);
 //        toast.show();
     }
-
     public void ClickedButton3(View view) {
         _bidValue = 3;
         Context context =  this.getApplicationContext();
@@ -196,7 +216,7 @@ public class BidActivity extends Activity {
     }
 
     public void ClickedButtonClubs(View view) {
-        Bid bid = new Bid(_bidValue,"♣");
+        Bid bid = new Bid(_bidValue,"♣",_biddingFragment.GetBidder());
         if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -205,11 +225,13 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
 
     public void ClickedButtonDiamonds(View view) {
-        Bid bid = new Bid(_bidValue, "♦");
+        Bid bid = new Bid(_bidValue, "♦",_biddingFragment.GetBidder());
         if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -218,11 +240,13 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
 
     public void ClickedButtonHearts(View view) {
-        Bid bid = new Bid(_bidValue, "♥");
+        Bid bid = new Bid(_bidValue, "♥",_biddingFragment.GetBidder());
         if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -231,11 +255,13 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
 
     public void ClickedButtonSpades(View view) {
-        Bid bid = new Bid(_bidValue, "♠");
+        Bid bid = new Bid(_bidValue, "♠",_biddingFragment.GetBidder());
         if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -244,11 +270,13 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
 
     public void ClickedButtonNT(View view) {
-        Bid bid = new Bid(_bidValue, "NT");
+        Bid bid = new Bid(_bidValue, "NT",_biddingFragment.GetBidder());
         if ((_bidValue == 0) ||(!_biddingFragment.AddBid(bid))) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -257,7 +285,9 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
 
 
@@ -286,7 +316,7 @@ public class BidActivity extends Activity {
     }
 
     public void ClickedButtonPass(View view) {
-        Bid bid = new Bid(0, "Pass");
+        Bid bid = new Bid(0, "Pass",_biddingFragment.GetBidder());
         if (!_biddingFragment.AddBid(bid)) {
             Context context = this.getApplicationContext();
             Context appContext = context.getApplicationContext();
@@ -295,8 +325,152 @@ public class BidActivity extends Activity {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            return;
         }
+        _biddingFragment.UpdateBidder();
     }
+
+    public void OutputBids(ArrayList<Bid> bidList) {
+
+        Calendar c = Calendar.getInstance();
+        String fileName = String.format("BidLogger%tY%tm%td", c, c, c);
+
+        Context context2 = getApplicationContext();
+        File dir = context2.getFilesDir();
+
+        String[] files = fileList();
+        String data = "";
+        Boolean found = false;
+        String fileOnDisk = "";
+
+        if ( files.length> 0 ) {
+            for (int i=0; i< files.length;i++){
+                fileOnDisk = files[i];
+                if (fileOnDisk.equals(fileName))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+/*
+            String file = files[0];
+            String path = dir +"/" + file;
+            try {
+                FileReader in = new FileReader(path);
+
+                 BufferedReader reader = new BufferedReader(in);
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    data += line;
+ //                   System.out.println(line);
+                }
+            } catch (IOException x) {
+                System.err.println(x);
+            }
+*/
+        }
+
+
+
+
+
+/*
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setNamespaceAware(false);
+            dbf.setValidating(false);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            return db.parse(source);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+*/
+            Document doc;
+            Element rootElement;
+
+
+            try {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+
+
+        if (found) {
+            docFactory.setNamespaceAware(false);
+            docFactory.setValidating(false);
+            DocumentBuilder db = docFactory.newDocumentBuilder();
+
+            File file = new File(context2.getFilesDir(), fileName);
+
+            doc =  db.parse(file);
+            rootElement = doc.getDocumentElement();
+           }
+        else {
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            // Add root elements
+            doc = docBuilder.newDocument();
+            rootElement = doc.createElement("Competition");
+            doc.appendChild(rootElement);
+        }
+
+        // board elements
+        Element boardElement = doc.createElement("Board");
+        rootElement.appendChild(boardElement);
+
+        // set attribute to board element
+        Attr attr = doc.createAttribute("HandNumber");
+        attr.setValue("1");
+        boardElement.setAttributeNode(attr);
+
+            for(int i=0;i< bidList.size();i++)
+            {
+                Bid bid = bidList.get(i);
+
+                // bid elements
+                Element bidElement = doc.createElement("Bid");
+                boardElement.appendChild(bidElement);
+
+                // set attribute to bid element
+                Attr attr1 = doc.createAttribute("bid");
+                attr1.setValue(bid.TheBid());
+                bidElement.setAttributeNode(attr1);
+
+                // set attribute to bid element
+                Attr attr2 = doc.createAttribute("by");
+                attr2.setValue(bid.By());
+                bidElement.setAttributeNode(attr2);
+            }
+
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+ //           StreamResult result = new StreamResult(new File(fileName));
+            StreamResult result = new StreamResult(new File(context2.getFilesDir(), fileName));
+
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (TransformerException tfe) {
+        tfe.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Context context = getApplicationContext();
+        Context appContext = context.getApplicationContext();
+        CharSequence text = "Output Xml!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    public String[] GetMyFiles(){
+        String[] files = fileList();
+        return files;
+    }
+
 }
 
 
