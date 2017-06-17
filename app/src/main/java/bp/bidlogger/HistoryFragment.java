@@ -50,9 +50,19 @@ public class HistoryFragment extends Fragment {
 
 
         String[] files = _bidActivity.GetMyFiles();
+        String[] dates = new String[files.length];
+
+        for (int i=0;i<files.length;i++)
+        {
+            String year = files[i].substring(9,13);
+            String month = files[i].substring(13,15);
+            String day = files[i].substring(15,17);
+            String date = day+"/"+month+"/"+year;
+            dates[i] = date;
+        }
 
         ArrayAdapter adapter = new ArrayAdapter<String>(_bidActivity,
-                android.R.layout.simple_list_item_1, files);
+                android.R.layout.simple_list_item_1, dates);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setAdapter(adapter);
